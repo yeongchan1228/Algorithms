@@ -3,7 +3,7 @@ package basicStep;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Problem3460 {
+public class Problem3460 { // 이진수 문제
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int T = in.nextInt();

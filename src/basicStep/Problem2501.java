@@ -3,7 +3,7 @@ package basicStep;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Problem2501 {
+public class Problem2501 { // 약수 구하기 문제
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int N = in.nextInt();

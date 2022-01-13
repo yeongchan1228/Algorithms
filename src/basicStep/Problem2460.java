@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Problem2460 {
+public class Problem2460 { // 지능형 기차 문제
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int outP = 0;

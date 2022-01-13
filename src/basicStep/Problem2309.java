@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Problem2309 {
+public class Problem2309 { // 일곱 난쟁이 문제
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         int sum = 0;
