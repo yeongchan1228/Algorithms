@@ -1,4 +1,4 @@
-package DP;
+package basicStep;
 
 import java.util.ArrayList;
 import java.util.Scanner;
