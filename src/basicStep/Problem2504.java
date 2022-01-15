@@ -13,7 +13,6 @@ public class Problem2504 { // 괄호의 값
 
 
         for(int i = 0; i < str.length(); i++){
-
             if(str.charAt(i) == '('){
                 tmp *= 2;
                 stk.push('(');
