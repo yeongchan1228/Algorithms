@@ -17,7 +17,6 @@ public class Problem2504 { // 괄호의 값
             if(str.charAt(i) == '('){
                 tmp *= 2;
                 stk.push('(');
-                System.out.println("실행됨");
             }
             else if(str.charAt(i) == '['){
                 tmp *= 3;
