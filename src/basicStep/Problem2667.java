@@ -1,10 +1,9 @@
 package basicStep;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Scanner;
 
-public class Problem2667 {
+public class Problem2667 { // 번지 번호 붙이기
 
     private static int count[];
     private static int arr[][];
@@ -13,22 +12,19 @@ public class Problem2667 {
     private static int N = 0;
     private static String str = "";
 
-    public static void find(int i, int j){
+    public static void find(int i, int j){ // 탐색
         check[i][j] = true;
-        if(arr[i][j+1] == 1 && !check[i][j]){ // 오른쪽 검사
-            count[k]++;
+        count[k]++;
+        if(arr[i][j+1] == 1 && !check[i][j+1]){ // 오른쪽 검사
             find(i, j+1);
         }
-        else if(arr[i+1][j] == 1&& !check[i+1][j]){ // 아래쪽 검사
-            count[k]++;
+        if(arr[i+1][j] == 1&& !check[i+1][j]){ // 아래쪽 검사
             find(i+1, j);
         }
-        else if(arr[i-1][j] == 1&& !check[i-1][j]){ // 위쪽 검사
-            count[k]++;
+        if(arr[i-1][j] == 1&& !check[i-1][j]){ // 위쪽 검사
             find(i-1, j);
         }
-        else if(arr[i][j-1] == 1&& !check[i][j-1]){ // 왼쪽 검사
-            count[k]++;
+        if(arr[i][j-1] == 1&& !check[i][j-1]){ // 왼쪽 검사
             find(i, j-1);
         }
 
@@ -39,7 +35,7 @@ public class Problem2667 {
         N = in.nextInt();
         arr = new int[N+2][N+2];
         count = new int[N*N];
-        check = new boolean[N][N];
+        check = new boolean[N+2][N+2];
 
         for(int i = 0; i < N+2; i++){
             if(i != 0 && i != N+1)
@@ -53,30 +49,36 @@ public class Problem2667 {
                     arr[i][j] = Character.getNumericValue(str.charAt(j-1));
             }
         }
-        /*for(int i = 1; i < N+1; i++){
-            for(int j = 1; j <N+1; j++){
-                System.out.print(arr[i][j]);
-            }
-            System.out.println("");
-        }*/
 
-        for(int i = 1; i < N+1; i++){
+        for(int i = 0; i < N+2; i++){
+            for(int j = 0; j < N+2; j++){
+                if(i == 0 || i == N+1)
+                    check[i][j] = true;
+                else if(j == 0 || j == N+1)
+                    check[i][j] = true;
+            }
+        }
+
+        for(int i = 1; i < N+1; i++){ // 정점 선택
             for(int j = 1; j < N+1; j++){
                 if(arr[i][j] == 1 && !check[i][j]){
-                    find(i, j);
                     k++;
+                    find(i, j);
                 }
             }
         }
 
         Arrays.sort(count);
 
-        System.out.println(count.length);
+        System.out.println(k);
+
         for(int i = 0; i < count.length; i++){
-            if(i == count.length - 1)
-                System.out.print(count[i]);
-            else
-                System.out.println(count[i]);
+            if(count[i] != 0) {
+                if (i == count.length - 1)
+                    System.out.print(count[i]);
+                else
+                    System.out.println(count[i]);
+            }
         }
     }
 }
