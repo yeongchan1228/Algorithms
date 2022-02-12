@@ -1,5 +1,6 @@
 package basicStep;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Problem11058 { // 크리보드
@@ -24,7 +25,7 @@ public class Problem11058 { // 크리보드
                 dp[i] = Math.max(dp[i], dp[i - (j + 3)] * (j + 2));
             }
         }
-
+        
         System.out.print(dp[N]);
     }
 }
