@@ -1,4 +1,4 @@
-package basicStep;
+package middleStep;
 
 import java.util.Scanner;
 
