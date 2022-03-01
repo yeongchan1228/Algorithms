@@ -24,5 +24,6 @@ public class Problem1138 { // 한 줄로 서기
         }
 
         arrayList.forEach(item -> System.out.print(item + " "));
+
     }
 }

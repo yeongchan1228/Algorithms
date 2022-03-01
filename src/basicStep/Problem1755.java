@@ -93,6 +93,7 @@ public class Problem1755 { // 숫자 놀이
                 System.out.println();
             }
             System.out.print(arrS[i] +" ");
+
         }
     }
 }
