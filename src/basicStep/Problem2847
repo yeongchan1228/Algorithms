@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.Arrays;
+
+public class Problem2847 { // 게임을 만든 동준이
+    public static void main(String[] args) throws IOException {
+
+        final BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        final BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int n = Integer.parseInt(in.readLine());
+
+        int[] scores = new int[n];
+        int beforeTotalScore = 0;
+        for (int i = 0; i < n; i++) {
+            int score = Integer.parseInt(in.readLine());
+            scores[i] = score;
+
+            beforeTotalScore += score;
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            int lastScore = scores[i];
+
+            for (int j = 0; j < i; j++) {
+                int calcScore = lastScore - 1;
+
+                if (scores[j] > calcScore) {
+                    scores[j] = calcScore;
+                }
+            }
+        }
+
+        out.write(String.valueOf(beforeTotalScore - Arrays.stream(scores).sum()));
+        out.flush();
+        out.close();
+
+    }
+}
