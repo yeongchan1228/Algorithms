@@ -1,8 +1,5 @@
 package programmers.level2;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class N148653 { // 마법의 엘리베이터
 
     public static void main(String[] args) {
