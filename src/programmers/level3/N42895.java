@@ -12,45 +12,53 @@ public class N42895 { // N으로 표현
 
     static class Solution {
         public int solution(int N, int number) {
-            List<Set<Integer>> setList = new ArrayList<>();
-            for (int i = 0; i < 9; i++) {
-                setList.add(new HashSet<>());
-            }
-            setList.get(1).add(N);
+            List<Set<Integer>> list = getList(N);
 
-            if (N == number) {
+            if (list.get(1).contains(number)) {
                 return 1;
             }
 
-            for (int i = 2; i < 9; i++) {
+            for (int i = 2; i <= 8; i++) {
+                list.get(i).add(Integer.parseInt(String.valueOf(N).repeat(i)));
                 for (int j = 1; j <= i / 2; j++) {
-                    addSet(setList.get(i), setList.get(i - j), setList.get(j));
-                    addSet(setList.get(i), setList.get(j), setList.get(i - j));
+                    calc(list.get(i), list.get(i - j), list.get(j));
+                    calc(list.get(i), list.get(j), list.get(i - j));
                 }
 
-                setList.get(i).add(Integer.parseInt(String.valueOf(N).repeat(i)));
-                for (int val : setList.get(i)) {
-                    if (val == number) {
-                        return i;
-                    }
+                if (list.get(i).contains(number)) {
+                    return i;
                 }
             }
+
 
             return -1;
         }
 
-        private void addSet(Set<Integer> base, Set<Integer> first, Set<Integer> second) {
-            for (int f : first) {
-                for (int p : second) {
-                    base.add(f + p);
-                    base.add(f - p);
-                    base.add(f * p);
-                    if (p == 0) {
+        private void calc(Set<Integer> base, Set<Integer> firstSet, Set<Integer> secondSet) {
+            for (int first : firstSet) {
+                for (int second : secondSet) {
+                    base.add(first + second);
+                    base.add(first - second);
+                    base.add(first * second);
+
+                    if (second == 0) {
                         continue;
                     }
-                    base.add(f / p);
+
+                    base.add(first / second);
                 }
             }
+        }
+
+        private List<Set<Integer>> getList(int N) {
+            List<Set<Integer>> list = new ArrayList<>();
+            for (int i = 0; i <= 8; i++) {
+                list.add(new HashSet<Integer>());
+            }
+
+            list.get(1).add(N);
+
+            return list;
         }
     }
 }
