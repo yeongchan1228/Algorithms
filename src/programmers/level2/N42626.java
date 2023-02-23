@@ -11,24 +11,34 @@ public class N42626 { // 더 맵게
 
     static class Solution {
         public int solution(int[] scoville, int K) {
-            PriorityQueue<Integer> pq = new PriorityQueue<>();
+            PriorityQueue<Integer> pq = getPriorityQueue(scoville);
 
-            for (int scovilleVal : scoville) {
-                pq.offer(scovilleVal);
-            }
+            int cnt = 0;
+            while (true) {
+                if (pq.peek() >= K) {
+                    return cnt;
+                }
 
-            int answer = 0;
-            while (pq.size() > 1) {
-                int val1 = pq.poll();
-                if (val1 >= K) {
+                if (pq.size() == 1) {
+                    if (pq.peek() >= K) {
+                        return cnt;
+                    }
                     break;
                 }
-                int val2 = pq.poll() * 2;
-                pq.offer(val1 + val2);
-                answer++;
+
+                cnt++;
+                pq.offer(pq.poll() + (pq.poll() * 2));
             }
 
-            return pq.poll() >= K ? answer : -1;
+            return -1;
+        }
+
+        private PriorityQueue<Integer> getPriorityQueue(int[] scoville) {
+            PriorityQueue<Integer> pq = new PriorityQueue<>();
+            for (int val : scoville) {
+                pq.add(val);
+            }
+            return pq;
         }
     }
 }
