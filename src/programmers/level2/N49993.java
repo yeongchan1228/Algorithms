@@ -8,52 +8,53 @@ public class N49993 { // 스킬트리
     public static void main(String[] args) {
         String skill = "CBD";
         String[] skill_trees = {"BACDE", "CBADF", "AECB", "BDA"};
+
         System.out.println(new Solution().solution(skill, skill_trees));
     }
 
     static class Solution {
-        private static final Map<Character, Character> skillInfo = new HashMap<>();
-
         public int solution(String skill, String[] skill_trees) {
+            Map<Character, Integer> map = getMap(skill);
+
             int answer = 0;
-
-            for (int i=0; i<skill.length(); i++) {
-                if (i == 0) {
-                    skillInfo.put(skill.charAt(0), null);
-                    continue;
+            for (String skillTree : skill_trees) {
+                boolean isFinish = true;
+                char[] chars = skillTree.toCharArray();
+                boolean[] visited = new boolean[skill.length()];
+                for (int i = 0; i < chars.length; i++) {
+                    if (map.containsKey(chars[i])) {
+                        int idx = map.get(chars[i]);
+                        if (!checkMap(idx, visited)) {
+                            isFinish = false;
+                            break;
+                        }
+                        visited[idx] = true;
+                    }
                 }
-                skillInfo.put(skill.charAt(i), skill.charAt(i-1));
-            }
 
-
-            for (String skillName : skill_trees) {
-                if(checkSkillOrder(skillName)) {
+                if (isFinish) {
                     answer++;
                 }
             }
+
             return answer;
         }
 
-        private boolean checkSkillOrder(String skillName) {
-            for (int i=0; i<skillName.length(); i++) {
-                Character partSkill = skillName.charAt(i);
-                if (!skillInfo.containsKey(partSkill)) {
-                    continue;
-                }
+        private Map<Character, Integer> getMap(String skill) {
+            Map<Character, Integer> map = new HashMap<>();
+            for (int i = 0; i < skill.length(); i++) {
+                map.put(skill.charAt(i), i);
+            }
+            return map;
+        }
 
-                Character prevSkill = skillInfo.get(partSkill);
-                if (i == 0) {
-                    if (prevSkill != null) {
-                        return false;
-                    }
-                    continue;
-                }
-
-                String subSkill = skillName.substring(0, i);
-                if (prevSkill != null && !subSkill.contains(String.valueOf(prevSkill))) {
+        private boolean checkMap(int idx, boolean[] visited) {
+            for (int i = 0; i < idx; i++) {
+                if (!visited[i]) {
                     return false;
                 }
             }
+
             return true;
         }
     }
