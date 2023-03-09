@@ -18,17 +18,19 @@ public class Problem14502 { // 연구소
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(in.readLine());
 
-        N = Integer.parseInt(st.nextToken()); // 세로
-        M = Integer.parseInt(st.nextToken()); // 가로
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
         map = new int[N][M];
         copy = new int[N][M];
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(in.readLine());
             for (int j = 0; j < M; j++) {
-                int num = Integer.parseInt(st.nextToken());
-                if(num == 2) arr.add(new Point(j, i));
-                map[i][j] = num;
+                map[i][j] = Integer.parseInt(st.nextToken());
+
+                if (map[i][j] == 2) {
+                    arr.add(new Point(i, j));
+                }
             }
         }
 
@@ -39,80 +41,66 @@ public class Problem14502 { // 연구소
         out.close();
     }
 
-    static void dfs(int depth, int start){
-        if(depth == 3){
+    private static void dfs(int depth, int start) {
+        if (depth == 3) {
             bfs();
+            max = Math.max(max, calcArea());
             return;
         }
 
-//        for (int i = 0; i < N; i++) {
-//            for (int j = 0; j < M; j++) {
-//                if(map[i][j] == 0 && !visited[i][j]){
-//                    map[i][j] = 1;
-//                    visited[i][j] = true;
-//                    dfs(depth + 1);
-//                    map[i][j] = 0;
-//                    visited[i][j] = false;
-//                }
-//            }
-//        }
-
         for (int i = start; i < N * M; i++) {
-            int dN = i / M;
-            int dM = i % M;
-
-            if(map[dN][dM] == 0){
-                map[dN][dM] = 1;
-                dfs(depth + 1, i + 1);
-                map[dN][dM] = 0;
+            int nowN = i / M;
+            int nowM = i % M;
+            if (map[nowN][nowM] == 0) {
+                map[nowN][nowM] = 1;
+                dfs(depth + 1, i);
+                map[nowN][nowM] = 0;
             }
         }
     }
 
-    static void bfs(){
-
-        setCopy();
-
-        int size = arr.size();
-        for (int t = 0; t < size; t++) {
-            queue.offer(arr.get(t));
-            while (!queue.isEmpty()) {
-                Point point = queue.poll();
-                int nowX = point.x;
-                int nowY = point.y;
-
-                for (int i = 0; i < 4; i++) {
-                    int pX = nowX + dx[i];
-                    int pY = nowY + dy[i];
-
-                    if (pX > -1 && pX < M && pY > -1 && pY < N && copy[pY][pX] == 0) {
-                        copy[pY][pX] = 2;
-                        queue.offer(new Point(pX, pY));
-                    }
-                }
-            }
-        }
-
-        max = Math.max(max, getResult());
-    }
-
-    static void setCopy(){
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
+    private static void copy() {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
                 copy[i][j] = map[i][j];
             }
         }
     }
 
-    static int getResult(){
-        int result = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                if(copy[i][j] == 0)
-                    result++;
+    private static void bfs() {
+        copy();
+        addQueue();
+
+        while (!queue.isEmpty()) {
+            Point point = queue.poll();
+
+            for (int i = 0; i < dx.length; i++) {
+                int px = point.x + dx[i];
+                int py = point.y + dy[i];
+                if (px > -1 && px < N && py > -1 && py < M && copy[px][py] == 0) {
+                    queue.offer(new Point(px, py));
+                    copy[px][py] = 2;
+                }
             }
         }
-        return result;
+    }
+
+    private static void addQueue() {
+        for (Point point : arr) {
+            queue.offer(point);
+        }
+    }
+
+    private static int calcArea() {
+        int cnt = 0;
+        for (int i = 0; i < copy.length; i++) {
+            for (int j = 0; j < copy[i].length; j++) {
+                if (copy[i][j] == 0) {
+                    cnt++;
+                }
+            }
+        }
+        return cnt;
     }
 
     static class Point{
