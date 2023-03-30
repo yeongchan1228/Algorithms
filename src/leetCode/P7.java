@@ -1,4 +1,4 @@
-package others.leetCode;
+package leetCode;
 
 public class P7 { // Reverse Integer
     public static void main(String[] args) {
